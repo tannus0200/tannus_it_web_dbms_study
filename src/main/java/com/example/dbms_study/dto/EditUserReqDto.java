@@ -7,15 +7,18 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class AddUserReqDto {
+public class EditUserReqDto {
+    private Integer userId;
     private String username;
     private String email;
 
-    public User toEntity(AddUserReqDto addUserReqDto){
+    public User toEntity(){
         return User.builder()
-                .username(addUserReqDto.username)
-                .email(addUserReqDto.email)
+                .userId(this.userId)
+                .username(this.username)
+                .email(this.email)
                 .build();
     }
+
 
 }

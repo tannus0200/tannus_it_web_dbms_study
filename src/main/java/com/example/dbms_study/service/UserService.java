@@ -2,6 +2,8 @@ package com.example.dbms_study.service;
 
 
 import com.example.dbms_study.dto.AddUserReqDto;
+import com.example.dbms_study.dto.ApiRespDto;
+import com.example.dbms_study.dto.EditUserReqDto;
 import com.example.dbms_study.entity.User;
 import com.example.dbms_study.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,26 @@ public class UserService {
         }
         response.put("user", user);
         return  response;
+    }
+    public ApiRespDto<User> editUser(EditUserReqDto editUserReqDto) {
+        Optional<User> user = userRepository.getUserByUserId(editUserReqDto.getUserId());
+        if (user.isEmpty()) {
+            return new ApiRespDto<>("해당 유저가 존재하지 않습니다.", null);
+        }
+        userRepository.editUser(editUserReqDto.toEntity());
+        return new ApiRespDto<>("성공적으로 수정이 완료되었습니다.", null);
+    }
+
+    public ApiRespDto<Integer> removeUser(Integer userId) {
+        Optional<User> user = userRepository.getUserByUserId(userId);
+        if (user.isEmpty()) {
+            return new ApiRespDto<>("해당 유저가 존재하지 않습니다.", null);
+        }
+        int result = userRepository.removeUser(userId);
+        if (result == 0) {
+            return new ApiRespDto<>("문제가 발생했습니다.", result);
+        }
+        return new ApiRespDto<>("성공적으로 삭제 되었습니다.", result);
     }
 
 }

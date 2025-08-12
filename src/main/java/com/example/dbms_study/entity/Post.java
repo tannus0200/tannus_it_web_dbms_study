@@ -1,0 +1,19 @@
+package com.example.dbms_study.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+@Builder
+@AllArgsConstructor
+public class Post {
+    private Integer postId;
+    private String title;
+    private String content;
+    private Integer userId;
+    private LocalDateTime createDt;
+    private LocalDateTime updateDt;
+}
